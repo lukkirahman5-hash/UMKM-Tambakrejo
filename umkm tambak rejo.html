@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Peta Sebaran UMKM Kecamatan Ngaliyan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- MarkerCluster CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+
+  <style>
+    #map { height: 100vh; width: 100%; }
+    .legend {
+      background: white;
+      padding: 10px;
+      border-radius: 8px;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+<h2 style="text-align:center;">🗺️ Peta Sebaran UMKM Kecamatan Ngaliyan</h2>
+<div id="map"></div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- MarkerCluster JS -->
+<script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+
+<script>
+  // Inisialisasi peta
+  var map = L.map('map').setView([-7.010, 110.350], 14);
+
+  // Tambahkan basemap
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 20,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  // Data UMKM
+    var dataUMKM = [
+  {jenis:"Makanan", pemilik:"Bapak Suhartono", tahun:2001, usaha:"UD. Putri Laut", pemasaran:"Online & Offline", jam:"06.00-21.00", kontak:"82133336738", lat:-6.96786, lon:110.35034},
+  {jenis:"Makanan", pemilik:"Ibu Fatkhan", tahun:1987, usaha:"Bandeng Bu Fatkhan", pemasaran:"Online & Offline", jam:"24 jam", kontak:"8990712242", lat:-6.96780, lon:110.35122},
+  {jenis:"Minuman", pemilik:"Ibu Shofi", tahun:2024, usaha:"Es Teh Jumbo", pemasaran:"Offline", jam:"07.00-16.00", kontak:"82242181312", lat:-6.96889, lon:110.35407},
+  {jenis:"Makanan & Minuman", pemilik:"Ibu Wiwik", tahun:2024, usaha:"Angkringan markas.com", pemasaran:"Offline", jam:"06.00-23.59", kontak:"-", lat:-6.96778, lon:110.35898},
+  {jenis:"Minuman", pemilik:"Ibu Ditya", tahun:2017, usaha:"Toko Nio", pemasaran:"Online & Offline", jam:"06.30-19.00", kontak:"8987000078", lat:-6.96924, lon:110.35117},
+  {jenis:"Makanan", pemilik:"Bu Parminingsih", tahun:1993, usaha:"Agen Ikan P. Maman", pemasaran:"Online & Offline", jam:"24 Jam", kontak:"81325426325", lat:-6.96732, lon:110.36047},
+  {jenis:"Makanan", pemilik:"Pak Sugianto", tahun:2010, usaha:"Bakso Malang", pemasaran:"Offline", jam:"09.00-20.00", kontak:"-", lat:-6.96855, lon:110.35690},
+  {jenis:"Minuman", pemilik:"Bu Arofah", tahun:2022, usaha:"Es Teh Jumbo Malang", pemasaran:"Offline & Online", jam:"09.30-17.00", kontak:"8124686572", lat:-6.96967, lon:110.35169},
+  {jenis:"Makanan", pemilik:"Bu Iko", tahun:2025, usaha:"Sushi Bu Iko", pemasaran:"Offline", jam:"14.30-18.00", kontak:"83878960186", lat:-6.96882, lon:110.35367},
+  {jenis:"Makanan", pemilik:"Dokter Hayik", tahun:2017, usaha:"Dokter Chicken", pemasaran:"Offline & Online", jam:"06.00-20.00", kontak:"81803553407", lat:-6.96866, lon:110.35359},
+  {jenis:"Makanan", pemilik:"Bu Hesti", tahun:2024, usaha:"D'kriuk", pemasaran:"Offline & Online", jam:"09.00-20.00", kontak:"895397200300", lat:-6.96884, lon:110.35348},
+  {jenis:"Makanan", pemilik:"Bu Sukini", tahun:2005, usaha:"Warteg Bu Sukini", pemasaran:"Offline", jam:"05.00-21.00", kontak:"895703228700", lat:-6.96741, lon:110.36016},
+  {jenis:"Makanan", pemilik:"Pak Sutardi", tahun:2020, usaha:"Warung jajanan Pak Sutardi", pemasaran:"Offline", jam:"08.00-17.00", kontak:"-", lat:-6.96749, lon:110.35992},
+  {jenis:"Minuman", pemilik:"Bu Govinda", tahun:2024, usaha:"Es teh solo", pemasaran:"Offline & Online", jam:"10.00-22.00", kontak:"85183051274", lat:-6.96911, lon:110.35210},
+  {jenis:"Jasa", pemilik:"Pak Nuryadi", tahun:1997, usaha:"Bengkel Sepeda Pak Nur", pemasaran:"Offline", jam:"08.00-19.00", kontak:"8386066347", lat:-6.96945, lon:110.35159},
+  {jenis:"Jasa", pemilik:"Pak Kastono", tahun:2002, usaha:"Bengkel Dinamo/elektro Boma", pemasaran:"Offline", jam:"09.00-16.00", kontak:"82224166265", lat:-6.96947, lon:110.35132},
+  {jenis:"Jasa", pemilik:"Ibu Santi", tahun:2010, usaha:"Santi Laundry", pemasaran:"Offline & Online", jam:"08.00-18.00", kontak:"895413441049", lat:-6.96798, lon:110.35304},
+  {jenis:"Jasa", pemilik:"Pak Maskun", tahun:2009, usaha:"Tambal Ban dan Cuci Motor", pemasaran:"Offline", jam:"07.00-16.00", kontak:"85875518323", lat:-6.96735, lon:110.35999},
+  {jenis:"Jasa", pemilik:"mas jipo/cipo", tahun:2018, usaha:"dworo copy/goprint", pemasaran:"Offline & Online", jam:"08.00-21.00", kontak:"82322785927", lat:-6.96858, lon:110.35463},
+  {jenis:"Jasa", pemilik:"Mas Chandra", tahun:2022, usaha:"Agen Es Kristal Bintang", pemasaran:"Offline", jam:"06.00-18.00", kontak:"88200609290", lat:-6.96929, lon:110.35068},
+  {jenis:"Jasa", pemilik:"Pak Hisam Mansur", tahun:2018, usaha:"Bengkel SAM Tekhnik", pemasaran:"Offline", jam:"08.00-17.00", kontak:"81390073573", lat:-6.96921, lon:110.35183},
+  {jenis:"Jasa", pemilik:"Bu Endah", tahun:2010, usaha:"Sylvia Laundry", pemasaran:"Offline & Online", jam:"05.00-21.00", kontak:"89510292115", lat:-6.96786, lon:110.35326},
+  {jenis:"Toko Material", pemilik:"Mas Kholid", tahun:2011, usaha:"Nizam Material", pemasaran:"Offline", jam:"08.00-16.30", kontak:"82243074892", lat:-6.96754, lon:110.35412},
+  {jenis:"Toko Material", pemilik:"Bapak Sumarsono", tahun:2020, usaha:"Toko Robot Pancing", pemasaran:"Offline", jam:"04.30-20.00", kontak:"-", lat:-6.96967, lon:110.35170},
+  {jenis:"Toko Kelontong", pemilik:"Ibu Siti", tahun:2022, usaha:"Toko Kelontong Bu Siti", pemasaran:"Offline", jam:"05.00-21.00", kontak:"-", lat:-6.96853, lon:110.35285},
+  {jenis:"Toko Kelontong", pemilik:"Pak Suwarno", tahun:1995, usaha:"Toko Kelontong 12", pemasaran:"Offline", jam:"06.00-18.00", kontak:"81324097388", lat:-6.96942, lon:110.35046}
+];
+
+
+  // Buat marker cluster
+  var markers = L.markerClusterGroup();
+
+  // Simbol warna kategori
+  function warnaKategori(jenis) {
+    switch(jenis) {
+      case "Makanan": return "red";
+      case "Minuman": return "blue";
+      case "Jasa": return "green";
+      case "Toko Material": return "orange";
+      case "Toko Kelontong": return "purple";
+      default: return "gray";
+    }
+  }
+
+  // Tambahkan marker ke peta
+  dataUMKM.forEach(function(item) {
+    var icon = L.icon({
+      iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-${warnaKategori(item.jenis)}.png`,
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34]
+    });
+
+    var marker = L.marker([item.lat, item.lon], {icon: icon});
+    var popup = `
+      <b>${item.usaha}</b><br>
+      Jenis: ${item.jenis}<br>
+      Pemilik: ${item.pemilik}<br>
+      Tahun Berdiri: ${item.tahun}<br>
+      Pemasaran: ${item.pemasaran}<br>
+      Jam Buka: ${item.jam}<br>
+      Kontak: ${item.kontak}
+    `;
+    marker.bindPopup(popup);
+    markers.addLayer(marker);
+  });
+
+  map.addLayer(markers);
+
+  // Tambahkan legenda
+  var legend = L.control({position: "bottomleft"});
+  legend.onAdd = function(map) {
+    var div = L.DomUtil.create("div", "legend");
+    div.innerHTML += "<b>Legenda UMKM</b><br>";
+    div.innerHTML += "<i style='background:red;width:12px;height:12px;display:inline-block;'></i> Makanan<br>";
+    div.innerHTML += "<i style='background:blue;width:12px;height:12px;display:inline-block;'></i> Minuman<br>";
+    div.innerHTML += "<i style='background:green;width:12px;height:12px;display:inline-block;'></i> Jasa<br>";
+    div.innerHTML += "<i style='background:orange;width:12px;height:12px;display:inline-block;'></i> Toko Material<br>";
+    div.innerHTML += "<i style='background:purple;width:12px;height:12px;display:inline-block;'></i> Toko Kelontong<br>";
+    return div;
+  };
+  legend.addTo(map);
+</script>
+
+</body>
+</html>
